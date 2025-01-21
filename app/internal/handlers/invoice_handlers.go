@@ -3,15 +3,20 @@ package handlers
 import (
 	"fmt"
 	"net/http"
-	
+
+	_ "github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
-	_"github.com/go-playground/validator/v10"
 )
 
 type RequestBody struct {
-	Name  string `json:"name" validate:"required"`    
-	Email string `json:"email" validate:"required,email"` 
+	Name  string `json:"name" validate:"required"`
+	Email string `json:"email" validate:"required,email"`
 }
+
+func Welcome(c echo.Context) error {
+	return c.JSON(http.StatusOK, "Welcome api")
+}
+
 func GetReturn(c echo.Context) error {
 
 	body := new(RequestBody)
@@ -23,7 +28,7 @@ func GetReturn(c echo.Context) error {
 
 	if err := c.Validate(body); err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{
-			"error": "Dados inválidos",
+			"error":  "Dados inválidos",
 			"detail": err.Error(),
 		})
 	}
@@ -32,5 +37,3 @@ func GetReturn(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, body)
 }
-
-
