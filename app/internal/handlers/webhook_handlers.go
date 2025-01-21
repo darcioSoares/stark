@@ -40,17 +40,15 @@ type RequestPayload struct {
 }
 
 func GetReturnPay(c echo.Context) error {
-	// Define a estrutura para receber o corpo da requisição
+	
 	var payload RequestPayload
 
-	// Faz o bind do corpo da requisição para a estrutura
 	if err := c.Bind(&payload); err != nil {
 		return c.JSON(http.StatusBadRequest, map[string]string{
 			"error": "Invalid request body",
 		})
 	}
 
-	// Exibe os dados no console
 	fmt.Printf("Corpo da requisição: %+v\n", payload)
 
 	// Retorna uma resposta de sucesso

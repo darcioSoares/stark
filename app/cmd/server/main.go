@@ -5,7 +5,6 @@ import (
 	"os"
 
 	"github.com/darcioSoares/stark/internal/routes"
-	// "github.com/darcioSoares/proj_api/internal/services"
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 	"github.com/joho/godotenv"
