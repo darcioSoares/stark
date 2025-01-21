@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -34,7 +35,11 @@ func main() {
 	routes.SetupRoutes(e)
 	routes.SetupRoutesWebhook(e)
 
-	services.SendRequestsEveryHour()
+	// goroutine
+	go func() {
+		fmt.Println("Iniciando envio periódico...")
+		services.SendRequestsEveryHour()
+	}()
 
 	log.Fatal(e.Start(":" + port))
 
