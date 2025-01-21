@@ -32,7 +32,7 @@ func main(){
 	e.Validator = &CustomValidator{validator: validator.New()}
 
 	routes.SetupRoutes(e)
-	// routes.SetupRoutesWebhook(e)
+	routes.SetupRoutesWebhook(e)
 
 	log.Fatal(e.Start(":" + port))
 
