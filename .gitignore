@@ -1,0 +1,37 @@
+# Diretórios e arquivos do módulo Go
+/bin/
+/pkg/
+/*.exe
+/*.dll
+/*.so
+/*.dylib
+
+# Dependências geradas pelo Go
+/go.sum
+/vendor/
+
+# Arquivos de compilação
+*.out
+*.o
+
+# Configurações de IDEs e editores de texto
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+
+# Arquivos de logs
+*.log
+
+# Configurações específicas do sistema operacional
+.DS_Store
+Thumbs.db
+
+# Outras configurações locais
+.env
+
+
+# Docker e ferramentas de container
+.dockerignore
+docker-compose.override.yml
