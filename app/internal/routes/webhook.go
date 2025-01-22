@@ -8,6 +8,6 @@ import (
 func SetupRoutesWebhook(e *echo.Echo) {
 	api := e.Group("/webhook")
 
-	api.POST("/", handlers.GetReturnPay)
+	api.POST("", handlers.WebhookHandler)
 
 }

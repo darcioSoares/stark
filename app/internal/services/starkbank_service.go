@@ -2,6 +2,8 @@ package services
 
 import (
 	"fmt"
+	"log"
+	"os"
 	"time"
 
 	"github.com/darcioSoares/stark/internal/utils"
@@ -20,18 +22,25 @@ kiDAFLMFGeLuP0u4n2JV1JIPyBSL6w==
 
 func CreateInvoice() ([]invoice.Invoice, error) {
 
+	//privateKeyContent := os.Getenv("PRIVATE_KEY")
+	idProject := os.Getenv("ID_PROJECT")
+
+	privateKey := os.Getenv("PRIVATE_KEY")
+	if privateKey == "" {
+		log.Fatalf("PRIVATE_KEY não configurado no arquivo .env")
+	}
+
 	user := &project.Project{
-		Id:          "6250122287513600",
+		Id:          idProject,
 		PrivateKey:  privateKeyContent,
 		Environment: "sandbox",
 	}
 
 	starkbank.User = user
 
-	// Obtenha dados aleatórios de users
+	// Obtenha dados aleatórios de contas para emitir invoices
 	randomInvoice := utils.GetRandomInvoice()
 
-	// Criação de invoices
 	invoices, err := invoice.Create([]invoice.Invoice{
 		{
 			Amount: randomInvoice.Amount,
@@ -46,10 +55,17 @@ func CreateInvoice() ([]invoice.Invoice, error) {
 	return invoices, nil
 }
 
-func CreateTransfer() ([]transfer.Transfer, error) {
-	// Inicialize o usuário do projeto
+func CreateTransfer(amount int, name string) ([]transfer.Transfer, error) {
+	privateKeyContent := os.Getenv("PRIVATE_KEY")
+	idProject := os.Getenv("ID_PROJECT")
+
+	privateKey := os.Getenv("PRIVATE_KEY")
+	if privateKey == "" {
+		log.Fatalf("PRIVATE_KEY não configurado no arquivo .env")
+	}
+
 	user := &project.Project{
-		Id:          "6250122287513600",
+		Id:          idProject,
 		PrivateKey:  privateKeyContent,
 		Environment: "sandbox",
 	}
@@ -60,7 +76,7 @@ func CreateTransfer() ([]transfer.Transfer, error) {
 
 	transfers, err := transfer.Create([]transfer.Transfer{
 		{
-			Amount:        1000000,
+			Amount:        amount,
 			Name:          "Stark Bank S.A.",
 			TaxId:         "20.018.183/0001-80",
 			BankCode:      "20018183",
@@ -68,7 +84,7 @@ func CreateTransfer() ([]transfer.Transfer, error) {
 			AccountNumber: "6341320293482496",
 			ExternalId:    "my-external-id",
 			Scheduled:     &scheduled,
-			Tags:          []string{"daenerys", "invoice/1234"},
+			Tags:          []string{name, "invoice"},
 		},
 	}, nil)
 

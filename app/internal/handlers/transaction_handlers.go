@@ -22,7 +22,7 @@ func StoreInvoiceHandler(c echo.Context) error {
 }
 
 func CreateTransferHandler(c echo.Context) error {
-	transfers, err := services.CreateTransfer()
+	transfers, err := services.CreateTransfer(100, "dss")
 	if err != nil {
 		fmt.Println(err)
 		return c.JSON(http.StatusInternalServerError, map[string]string{

@@ -7,7 +7,6 @@ import (
 	"github.com/starkbank/sdk-go/starkbank/invoice"
 )
 
-
 func GetRandomInvoice() invoice.Invoice {
 
 	invoiceData := []invoice.Invoice{
