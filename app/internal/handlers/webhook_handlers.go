@@ -28,5 +28,5 @@ func GetReturnPay(c echo.Context) error {
 	// 	"message": "Request received successfully",
 	// })
 
-	return c.JSON(http.StatusOK, payload)
+	return c.JSON(http.StatusOK, nil)
 }
