@@ -4,36 +4,32 @@ import (
 	"fmt"
 	"net/http"
 
-	_ "github.com/go-playground/validator/v10"
+	"github.com/darcioSoares/stark/internal/services"
 	"github.com/labstack/echo/v4"
 )
 
-type RequestTransactionBody struct {
-	Name  string `json:"name" validate:"required"`
-	Email string `json:"email" validate:"required,email"`
-}
-
-func Welcome1(c echo.Context) error {
-	return c.JSON(http.StatusOK, "Welcome api")
-}
-
-func GetReturn1(c echo.Context) error {
-
-	body := new(RequestBody)
-	if err := c.Bind(body); err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]string{
-			"error": "Erro ao processar o corpo da requisição",
+func StoreInvoiceHandler(c echo.Context) error {
+	invoices, err := services.CreateInvoice()
+	if err != nil {
+		fmt.Println(err)
+		return c.JSON(http.StatusInternalServerError, map[string]string{
+			"error": err.Error(),
 		})
 	}
 
-	if err := c.Validate(body); err != nil {
-		return c.JSON(http.StatusBadRequest, map[string]string{
-			"error":  "Dados inválidos",
-			"detail": err.Error(),
+	// Retorna a resposta para o cliente
+	return c.JSON(http.StatusOK, invoices)
+}
+
+func CreateTransferHandler(c echo.Context) error {
+	transfers, err := services.CreateTransfer()
+	if err != nil {
+		fmt.Println(err)
+		return c.JSON(http.StatusInternalServerError, map[string]string{
+			"error": err.Error(),
 		})
 	}
 
-	fmt.Println("Corpo da requisição:", body)
-
-	return c.JSON(http.StatusOK, body)
+	// Retorna a resposta para o cliente
+	return c.JSON(http.StatusOK, transfers)
 }
