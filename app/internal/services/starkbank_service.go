@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/darcioSoares/stark/internal/utils"
+
 	"github.com/starkbank/sdk-go/starkbank"
 	"github.com/starkbank/sdk-go/starkbank/invoice"
 	"github.com/starkbank/sdk-go/starkbank/transfer"
@@ -17,22 +19,24 @@ kiDAFLMFGeLuP0u4n2JV1JIPyBSL6w==
 -----END EC PRIVATE KEY-----`
 
 func CreateInvoice() ([]invoice.Invoice, error) {
-	
+
 	user := &project.Project{
 		Id:          "6250122287513600",
 		PrivateKey:  privateKeyContent,
-		Environment: "sandbox", 
+		Environment: "sandbox",
 	}
 
-	
 	starkbank.User = user
+
+	// Obtenha dados aleatórios de users
+	randomInvoice := utils.GetRandomInvoice()
 
 	// Criação de invoices
 	invoices, err := invoice.Create([]invoice.Invoice{
 		{
-			Amount: 400050, 
-			Name:   "Jow Snow B Stark",
-			TaxId:  "983.418.590-17", // CPF ou CNPJ
+			Amount: randomInvoice.Amount,
+			Name:   randomInvoice.Name,
+			TaxId:  randomInvoice.TaxId,
 		},
 	}, nil)
 
@@ -45,29 +49,26 @@ func CreateInvoice() ([]invoice.Invoice, error) {
 func CreateTransfer() ([]transfer.Transfer, error) {
 	// Inicialize o usuário do projeto
 	user := &project.Project{
-		Id:          "6250122287513600", 
+		Id:          "6250122287513600",
 		PrivateKey:  privateKeyContent,
-		Environment: "sandbox", 
+		Environment: "sandbox",
 	}
 
-	
 	starkbank.User = user
-	
+
 	scheduled := time.Date(2025, 01, 30, 0, 0, 0, 0, time.UTC)
 
-	
 	transfers, err := transfer.Create([]transfer.Transfer{
 		{
 			Amount:        1000000,
 			Name:          "Stark Bank S.A.",
-			TaxId:         "20.018.183/0001-80",                 
-			BankCode:      "20018183",                           
-			BranchCode:    "0001",                               
-			AccountNumber: "6341320293482496",                   
-			ExternalId:    "my-external-id",                    
-			Scheduled:     &scheduled,                           
-			Tags:          []string{"daenerys", "invoice/1234"}, 
-			
+			TaxId:         "20.018.183/0001-80",
+			BankCode:      "20018183",
+			BranchCode:    "0001",
+			AccountNumber: "6341320293482496",
+			ExternalId:    "my-external-id",
+			Scheduled:     &scheduled,
+			Tags:          []string{"daenerys", "invoice/1234"},
 		},
 	}, nil)
 
