@@ -28,14 +28,13 @@ var user = &project.Project{
 }
 
 func WebhookHandler(c echo.Context) error {
-	// Lê o corpo da requisição
+
 	body, err := ioutil.ReadAll(c.Request().Body)
 	if err != nil {
 		fmt.Println("Erro ao ler o corpo da requisição:", err)
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Erro ao ler o corpo da requisição"})
 	}
-
-	// Obtenha o cabeçalho de assinatura
+	
 	signature := c.Request().Header.Get("Digital-Signature")
 	if signature == "" {
 		fmt.Println("Cabeçalho Digital-Signature ausente")
@@ -43,47 +42,13 @@ func WebhookHandler(c echo.Context) error {
 	}
 
 	starkbank.User = user
-
 	event.Parse(string(body), signature, user)
 
-	// var RequestWebhook struct {
-	// 	Event struct {
-	// 		Created      string `json:"created"`
-	// 		ID           string `json:"id"`
-	// 		Subscription string `json:"subscription"`
-	// 		WorkspaceID  string `json:"workspaceId"`
-	// 		Log          struct {
-	// 			Type    string `json:"type"`
-	// 			Created string `json:"created"`
-	// 			Invoice struct {
-	// 				ID         string `json:"id"`
-	// 				Status     string `json:"status"`
-	// 				Amount     int    `json:"amount"`
-	// 				Name       string `json:"name"`
-	// 				TaxID      string `json:"taxId"`
-	// 				Created    string `json:"created"`
-	// 				Nominal    int    `json:"nominalAmount"`
-	// 				Link       string `json:"link"`
-	// 				PDF        string `json:"pdf"`
-	// 				Expiration int    `json:"expiration"`
-	// 			} `json:"invoice"`
-	// 		} `json:"log"`
-	// 	} `json:"event"`
-	// }
 
-	// Decodifica o evento no formato esperado
 	if err := json.Unmarshal(body, &models.RequestWebhook); err != nil {
 		fmt.Println("Erro ao decodificar o evento:", err)
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Erro ao decodificar o evento"})
 	}
-
-	// Loga os detalhes do evento no console
-	fmt.Println("Evento Recebido:")
-	fmt.Printf("ID do Evento: %s\n", models.RequestWebhook.Event.ID)
-	fmt.Printf("Tipo de Assinatura: %s\n", models.RequestWebhook.Event.Subscription)
-	fmt.Printf("Tipo de Log: %s\n", models.RequestWebhook.Event.Log.Type)
-	fmt.Printf("Status da Invoice: %s\n", models.RequestWebhook.Event.Log.Invoice.Status)
-	fmt.Printf("Nome: %s, Valor: %d, PDF: %s\n", models.RequestWebhook.Event.Log.Invoice.Name, models.RequestWebhook.Event.Log.Invoice.Amount, models.RequestWebhook.Event.Log.Invoice.PDF)
 
 	name := models.RequestWebhook.Event.Log.Invoice.Name
 	amount := models.RequestWebhook.Event.Log.Invoice.Amount
@@ -99,11 +64,10 @@ func WebhookHandler(c echo.Context) error {
 			})
 		}
 
-		// Retorna a resposta para o cliente
 		return c.JSON(http.StatusOK, transfers)
 
 	} else if models.RequestWebhook.Event.Subscription == "invoice" {
-		fmt.Println("Invoice ainda não paga ou outro tipo de evento.")
+		fmt.Println("Invoice ainda não paga.")
 	}
 
 	return c.JSON(http.StatusOK, map[string]string{"status": "Evento processado com sucesso"})

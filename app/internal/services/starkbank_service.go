@@ -2,8 +2,6 @@ package services
 
 import (
 	"fmt"
-	"log"
-	"os"
 	"time"
 
 	"github.com/darcioSoares/stark/internal/utils"
@@ -20,21 +18,13 @@ oUQDQgAEu4gONKh9t794DaLahDib/rfL5aGyR0V/0RSvZ6cd46y/j78ybFWsd04Y
 kiDAFLMFGeLuP0u4n2JV1JIPyBSL6w==
 -----END EC PRIVATE KEY-----`
 
+var user = &project.Project{
+	Id:          "6250122287513600",
+	PrivateKey:  privateKeyContent,
+	Environment: "sandbox",
+}
+
 func CreateInvoice() ([]invoice.Invoice, error) {
-
-	//privateKeyContent := os.Getenv("PRIVATE_KEY")
-	idProject := os.Getenv("ID_PROJECT")
-
-	privateKey := os.Getenv("PRIVATE_KEY")
-	if privateKey == "" {
-		log.Fatalf("PRIVATE_KEY não configurado no arquivo .env")
-	}
-
-	user := &project.Project{
-		Id:          idProject,
-		PrivateKey:  privateKeyContent,
-		Environment: "sandbox",
-	}
 
 	starkbank.User = user
 
@@ -56,16 +46,16 @@ func CreateInvoice() ([]invoice.Invoice, error) {
 }
 
 func CreateTransfer(amount int, name string) ([]transfer.Transfer, error) {
-	privateKeyContent := os.Getenv("PRIVATE_KEY")
-	idProject := os.Getenv("ID_PROJECT")
+	// privateKeyContent := os.Getenv("PRIVATE_KEY")
+	// idProject := os.Getenv("ID_PROJECT")
 
-	privateKey := os.Getenv("PRIVATE_KEY")
-	if privateKey == "" {
-		log.Fatalf("PRIVATE_KEY não configurado no arquivo .env")
-	}
+	// privateKey := os.Getenv("PRIVATE_KEY")
+	// if privateKey == "" {
+	// 	log.Fatalf("PRIVATE_KEY não configurado no arquivo .env")
+	// }
 
 	user := &project.Project{
-		Id:          idProject,
+		Id:          "6250122287513600",
 		PrivateKey:  privateKeyContent,
 		Environment: "sandbox",
 	}
