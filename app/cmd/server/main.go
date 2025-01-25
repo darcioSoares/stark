@@ -5,7 +5,9 @@ import (
 	"log"
 	"os"
 
+	"github.com/darcioSoares/stark/internal/config"
 	"github.com/darcioSoares/stark/internal/routes"
+
 	"github.com/darcioSoares/stark/internal/services"
 	"github.com/go-playground/validator/v10"
 	"github.com/joho/godotenv"
@@ -27,7 +29,9 @@ func main() {
 	}
 
 	port := os.Getenv("PORT")
-
+	
+	config.LoadEnvVars()
+	
 	e := echo.New()
 
 	e.Validator = &CustomValidator{validator: validator.New()}
@@ -35,12 +39,11 @@ func main() {
 	routes.SetupRoutes(e)
 	routes.SetupRoutesWebhook(e)
 
-	// goroutine
+	//goroutine
 	go func() {
-		fmt.Println("Iniciando envio periódico...")
+		fmt.Println("Iniciando envio periódico de invoice...")
 		services.SendRequestsEveryHour()
 	}()
 
 	log.Fatal(e.Start(":" + port))
-
 }
