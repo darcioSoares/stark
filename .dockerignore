@@ -1,0 +1,8 @@
+# Ignorar o binário gerado
+main
+
+# Ignorar arquivos locais e desnecessários
+*.log
+*.env
+node_modules
+vendor
