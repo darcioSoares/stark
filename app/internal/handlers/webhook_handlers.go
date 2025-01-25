@@ -6,26 +6,15 @@ import (
 	"io/ioutil"
 	"net/http"
 
+	"github.com/darcioSoares/stark/internal/config"
+	"github.com/darcioSoares/stark/internal/models"
 	"github.com/darcioSoares/stark/internal/services"
-    "github.com/darcioSoares/stark/internal/models"
 
 	"github.com/labstack/echo/v4"
 	"github.com/starkbank/sdk-go/starkbank"
 	"github.com/starkbank/sdk-go/starkbank/event"
 	"github.com/starkinfra/core-go/starkcore/user/project"
 )
-
-var privateKeyContent = `-----BEGIN EC PRIVATE KEY-----
-MHQCAQEEIN0NFH1lGEzLXhnaXxKKBqC3J1WWuLtiRAzSEfRXBqTgoAcGBSuBBAAK
-oUQDQgAEu4gONKh9t794DaLahDib/rfL5aGyR0V/0RSvZ6cd46y/j78ybFWsd04Y
-kiDAFLMFGeLuP0u4n2JV1JIPyBSL6w==
------END EC PRIVATE KEY-----`
-
-var user = &project.Project{
-	Id:          "6250122287513600",
-	PrivateKey:  privateKeyContent,
-	Environment: "sandbox",
-}
 
 func WebhookHandler(c echo.Context) error {
 
@@ -34,16 +23,21 @@ func WebhookHandler(c echo.Context) error {
 		fmt.Println("Erro ao ler o corpo da requisição:", err)
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Erro ao ler o corpo da requisição"})
 	}
-	
+
 	signature := c.Request().Header.Get("Digital-Signature")
 	if signature == "" {
 		fmt.Println("Cabeçalho Digital-Signature ausente")
 		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Cabeçalho Digital-Signature ausente"})
 	}
 
+	user := &project.Project{
+		Id:          config.IDProject,
+		PrivateKey:  config.PrivateKey,
+		Environment: "sandbox",
+	}
+
 	starkbank.User = user
 	event.Parse(string(body), signature, user)
-
 
 	if err := json.Unmarshal(body, &models.RequestWebhook); err != nil {
 		fmt.Println("Erro ao decodificar o evento:", err)
