@@ -8,6 +8,11 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
+func Welcome(c echo.Context) error {
+	return c.JSON(http.StatusOK, "Welcome api")
+}
+
+
 func StoreInvoiceHandler(c echo.Context) error {
 	invoices, err := services.CreateInvoice()
 	if err != nil {
