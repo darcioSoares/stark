@@ -17,7 +17,6 @@ func StoreInvoiceHandler(c echo.Context) error {
 		})
 	}
 
-	// Retorna a resposta para o cliente
 	return c.JSON(http.StatusOK, invoices)
 }
 
@@ -30,6 +29,5 @@ func CreateTransferHandler(c echo.Context) error {
 		})
 	}
 
-	// Retorna a resposta para o cliente
 	return c.JSON(http.StatusOK, transfers)
 }
