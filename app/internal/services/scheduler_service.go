@@ -12,7 +12,7 @@ func SendRequestsEveryHour() {
 
 		sendRequests()
 
-		fmt.Println("Aguardando 1 hora para envio...")
+		fmt.Println("Aguardando 3 hora para envio...")
 		time.Sleep(3 * time.Hour)
 		//time.Sleep(10 * time.Minute)
 	}

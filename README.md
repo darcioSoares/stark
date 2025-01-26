@@ -54,6 +54,10 @@ go mod tidy (Baixar as dependencias )
 
 go run cmd/server/main.go
 
+-------------------------------------------------------------------------------
+
+Observação usei ngrok http 8080 para receber webhooks
+
 --------------------------------------------------------------------------------
 
 ##Sobre as Branches
