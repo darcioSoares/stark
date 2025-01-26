@@ -13,7 +13,6 @@ type RabbitMQService struct {
 	queue   amqp.Queue
 }
 
-// Initialize sets up the RabbitMQ connection, declares a queue, and binds it to an exchange
 func (r *RabbitMQService) Initialize(amqpURL, queueName, exchangeName, exchangeType string) error {
 	var err error
 
@@ -51,7 +50,6 @@ func (r *RabbitMQService) Initialize(amqpURL, queueName, exchangeName, exchangeT
 		return err
 	}
 
-	// Declarar a fila
 	r.queue, err = r.channel.QueueDeclare(
 		queueName, // Nome da fila
 		true,      // Durable
@@ -64,7 +62,7 @@ func (r *RabbitMQService) Initialize(amqpURL, queueName, exchangeName, exchangeT
 		return err
 	}
 
-	// Vincular a fila à exchange
+	// fila com exchange
 	err = r.channel.QueueBind(
 		queueName,    // Nome da fila
 		"",           // Routing key (use "" para fanout)
@@ -80,7 +78,6 @@ func (r *RabbitMQService) Initialize(amqpURL, queueName, exchangeName, exchangeT
 	return nil
 }
 
-// SendMessage sends a message to the specified exchange
 func (r *RabbitMQService) SendMessage(exchangeName, routingKey, message string) error {
 	err := r.channel.Publish(
 		exchangeName, // Nome da exchange
@@ -101,7 +98,6 @@ func (r *RabbitMQService) SendMessage(exchangeName, routingKey, message string) 
 	return nil
 }
 
-// ConsumeMessages consumes messages from the queue
 func (r *RabbitMQService) ConsumeMessages() (<-chan amqp.Delivery, error) {
 	messages, err := r.channel.Consume(
 		r.queue.Name, // Nome da fila
@@ -121,7 +117,6 @@ func (r *RabbitMQService) ConsumeMessages() (<-chan amqp.Delivery, error) {
 	return messages, nil
 }
 
-// Close closes the RabbitMQ connection and channel
 func (r *RabbitMQService) Close() {
 	if r.channel != nil {
 		r.channel.Close()

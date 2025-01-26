@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"os"
@@ -11,8 +12,6 @@ import (
 	"github.com/darcioSoares/stark/internal/handlers"
 	"github.com/darcioSoares/stark/internal/routes"
 	"github.com/darcioSoares/stark/internal/services"
-
-	//"github.com/streadway/amqp"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/joho/godotenv"
@@ -28,19 +27,18 @@ func (cv *CustomValidator) Validate(i interface{}) error {
 }
 
 func main() {
+
 	err := godotenv.Load()
 	if err != nil {
 		log.Fatalf("Erro ao carregar o arquivo .env: %v", err)
 	}
 
 	port := os.Getenv("PORT")
-
 	config.LoadEnvVars()
 
 	e := echo.New()
 
-	e.Validator = &CustomValidator{validator: validator.New()}
-
+	//rotas
 	routes.SetupRoutes(e)
 	routes.SetupRoutesWebhook(e)
 
@@ -65,24 +63,37 @@ func main() {
 		log.Fatalf("Failed to send message: %v", err)
 	}
 
-	// // Consumir mensagens
-	// messages, err := rabbitmq.ConsumeMessages()
-	// if err != nil {
-	// 	log.Fatalf("Failed to consume messages: %v", err)
-	// }
+	go func() {
 
-	// // Processar mensagens recebidas
-	// for msg := range messages {
-	// 	log.Printf("Received message: %s", string(msg.Body))
-	// }
+		type MessageFilla struct {
+			Amount int    `json:"amount"`
+			Name   string `json:"name"`
+		}
+
+		messages, err := rabbitmq.ConsumeMessages()
+		if err != nil {
+			log.Fatalf("Failed to consume messages: %v", err)
+		}
+
+		for msg := range messages {
+
+			var msgData MessageFilla
+			err := json.Unmarshal(msg.Body, &msgData)
+			if err != nil {
+				log.Printf("Erro ao deserializar mensagem: %v", err)
+				continue
+			}
+
+			transfers, err := services.CreateTransfer(msgData.Amount, msgData.Name)
+			if err != nil {
+				fmt.Println(err)
+			}
+			log.Printf("Mensagem recebida da fila e enviada para transfer : %v", transfers)
+		}
+	}()
 
 	// Atribuir o RabbitMQService global no handler
 	handlers.RabbitMQ = rabbitmq
-
-	// Usar o handler para enviar uma mensagem
-	handlers.HandleWebhook(exchangeName, "routing_key", "Hello, RabbitMQ  hellllooo!")
-
-	//////////////////////////
 
 	//goroutine
 	go func() {

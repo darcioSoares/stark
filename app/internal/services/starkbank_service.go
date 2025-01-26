@@ -72,3 +72,7 @@ func CreateTransfer(amount int, name string) ([]transfer.Transfer, error) {
 
 	return transfers, nil
 }
+
+func ConsumeMessagesFila() {
+	
+}

@@ -13,15 +13,14 @@ func SendRequestsEveryHour() {
 		sendRequests()
 
 		fmt.Println("Aguardando 1 hora para envio...")
-		//time.Sleep(1 * time.Hour)
-		time.Sleep(10 * time.Minute)
+		time.Sleep(3 * time.Hour)
+		//time.Sleep(10 * time.Minute)
 	}
 }
 
 func sendRequests() {
-	// Define número aleatório de requisições entre 4 e 6
-	numRequests := rand.Intn(2) + 3
-	//numRequests := 2
+
+	numRequests := rand.Intn(14-8+1) + 8
 
 	fmt.Printf("Enviando %d requisições...\n", numRequests)
 
