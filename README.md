@@ -28,7 +28,7 @@ cd stark
 
 ### Configuração do arquivo .env
 
-Renomeie o arquivo .env-exemplo para .env Que se encontra dentro da pasta APP
+Renomeie o arquivo .env-exemplo para .env que se encontra dentro da pasta APP
 
 mv .env-exemplo .env
 
@@ -74,14 +74,20 @@ Nesta branch, a aplicação se conecta ao RabbitMQ e usa filas para armazenar os
 
 Como baixar e trocar para a branch rabbitmq:
 
-git fetch origin rabbitmq  ( para baixar )
-git checkout -b rabbitmq origin/rabbitmq ( Isso cria e troca para a branch local rabbitmq)
-
+git fetch origin rabbitmq ( para baixar ) git checkout -b rabbitmq origin/rabbitmq ( Isso cria e troca para a branch local rabbitmq)
 
 Todo o restante já está configurado no arquivo.
 
 -------------------------------------------------------
 
+### Rotas
+- GET /api (Boas vindas)
+- POST /invoices (Envio de invoices)
+- POST /tranfer (Transferencia bancaria)
+
+- POST /webhook (webhook)
+
+-------------------------------------------------------
 ## Conclusão
 
 Seguindo esses passos, a aplicação estará pronta para rodar, seja em modo síncrono ou assíncrono, dependendo da branch utilizada. Caso tenha dúvidas, revise o README.md ou entre em contato.
