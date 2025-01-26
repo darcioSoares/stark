@@ -10,3 +10,8 @@ docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:management
 
 docker build -t go-app --build-arg MODE=dev .
 docker build -t go-app --build-arg MODE=prod .
+
+
+docker-compose up --build -d
+
+go mod tidy

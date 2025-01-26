@@ -9,6 +9,7 @@ require (
 	github.com/starkbank/sdk-go v0.5.0
 	github.com/starkinfra/core-go v0.2.3
 	github.com/streadway/amqp v1.1.0
+	golang.org/x/exp v0.0.0-20250106191152-7588d65b2ba8
 )
 
 require (

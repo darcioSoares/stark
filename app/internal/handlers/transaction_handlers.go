@@ -9,9 +9,8 @@ import (
 )
 
 func Welcome(c echo.Context) error {
-	return c.JSON(http.StatusOK, "Welcome api")
+	return c.JSON(http.StatusOK, "Welcome API workings testestestes")
 }
-
 
 func StoreInvoiceHandler(c echo.Context) error {
 	invoices, err := services.CreateInvoice()

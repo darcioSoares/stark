@@ -2,8 +2,9 @@ package services
 
 import (
 	"fmt"
-	"math/rand"
 	"time"
+
+	"golang.org/x/exp/rand"
 )
 
 func SendRequestsEveryHour() {
@@ -13,13 +14,14 @@ func SendRequestsEveryHour() {
 
 		fmt.Println("Aguardando 1 hora para envio...")
 		//time.Sleep(1 * time.Hour)
-		time.Sleep(20 * time.Minute)
+		time.Sleep(10 * time.Minute)
 	}
 }
 
 func sendRequests() {
 	// Define número aleatório de requisições entre 4 e 6
 	numRequests := rand.Intn(2) + 3
+	//numRequests := 2
 
 	fmt.Printf("Enviando %d requisições...\n", numRequests)
 
@@ -36,5 +38,3 @@ func sendRequests() {
 		}
 	}
 }
-
-

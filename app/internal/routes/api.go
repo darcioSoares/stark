@@ -8,7 +8,7 @@ import (
 func SetupRoutes(e *echo.Echo) {
 	api := e.Group("/api")
 
-	api.GET("/", handlers.Welcome)
+	api.GET("", handlers.Welcome)
 	
 	api.POST("/invoices", handlers.StoreInvoiceHandler)
 	api.POST("/tranfer", handlers.CreateTransferHandler)
