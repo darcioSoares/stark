@@ -20,7 +20,7 @@ func SendRequestsEveryHour() {
 
 func sendRequests() {
 
-	numRequests := rand.Intn(14-8+1) + 8
+	numRequests := rand.Intn(12-8+1) + 8
 
 	fmt.Printf("Enviando %d requisições...\n", numRequests)
 
