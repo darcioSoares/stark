@@ -26,11 +26,23 @@ Passo a passo para rodar a aplicação
 git clone https://github.com/darcioSoares/stark
 cd stark
 
-2. Suba os containers com Docker:
+Configuração do arquivo .env
+
+Renomeie o arquivo .env-exemplo para .env Que se encontra dentro da pasta APP
+
+mv .env-exemplo .env
+
+Adicione os valores necessários:
+
+PRIVATE_KEY: Chave privada da aplicação. (Tomar cuidado com os espaços seguir exemplo do arq .env-exemplo)
+
+ID_PROJECT: ID do projeto.
+
+2. Suba os containers com Docker: (Executar dentro da Raiz do projeto)
 
 Dentro da pasta do projeto, use o comando:
 
-docker-compose up
+docker-compose up ou docker compose up dependendo da versão do compose
 
 Este comando irá subir os containers necessários para a aplicação.
 
@@ -38,9 +50,13 @@ Este comando irá subir os containers necessários para a aplicação.
 
 Caso prefira rodar sem Docker, utilize o seguinte comando:
 
+go mod tidy (Baixar as dependencias )
+
 go run cmd/server/main.go
 
-Sobre as Branches
+--------------------------------------------------------------------------------
+
+##Sobre as Branches
 
 Branch master (síncrona):
 
@@ -57,21 +73,11 @@ Como baixar e trocar para a branch rabbitmq:
 git fetch origin rabbitmq
 git checkout rabbitmq
 
-Configuração do arquivo .env
-
-Renomeie o arquivo .env-exemplo para .env:
-
-mv .env-exemplo .env
-
-Adicione os valores necessários:
-
-PRIVATE_KEY: Chave privada da aplicação.
-
-ID_PROJECT: ID do projeto.
-
 Todo o restante já está configurado no arquivo.
 
-Conclusão
+-------------------------------------------------------
+
+##Conclusão
 
 Seguindo esses passos, a aplicação estará pronta para rodar, seja em modo síncrono ou assíncrono, dependendo da branch utilizada. Caso tenha dúvidas, revise o README.md ou entre em contato.
 
