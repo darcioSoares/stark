@@ -74,8 +74,9 @@ Nesta branch, a aplicação se conecta ao RabbitMQ e usa filas para armazenar os
 
 Como baixar e trocar para a branch rabbitmq:
 
-git fetch origin rabbitmq
-git checkout rabbitmq
+git fetch origin rabbitmq  ( para baixar )
+git checkout -b rabbitmq origin/rabbitmq ( Isso cria e troca para a branch local rabbitmq)
+
 
 Todo o restante já está configurado no arquivo.
 
