@@ -9,7 +9,7 @@ import (
 )
 
 func Welcome(c echo.Context) error {
-	return c.JSON(http.StatusOK, "Welcome API workings testestestes")
+	return c.JSON(http.StatusOK, "Welcome, API workings STARK BANK")
 }
 
 func StoreInvoiceHandler(c echo.Context) error {
