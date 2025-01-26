@@ -1,11 +1,12 @@
-# My Go Project
+# My Go Project API finance
 
-Este é a estrutura da API Stark Back (teste)
+Este é a estrutura da API Stark Bank (teste)
 
 ```plaintext
-my-go-project/
+app/
 ├── cmd/                      # Entrypoints da aplicação
-│   └── main.go               # Arquivo principal do aplicativo
+|   |── server/               # Pasta aonde esta o arquivo principal
+│       └── main.go           # Arquivo principal do aplicativo
 ├── internal/                 # Código interno (não exportado para outros projetos)
 │   ├── handlers/             # Handlers para rotas (controllers)
 │   ├── routes/               # Definições das rotas
