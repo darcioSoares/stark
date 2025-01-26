@@ -17,16 +17,16 @@ app/
 ├── go.sum                    # Checksum das dependências
 ├── README.md                 # Documentação do projeto
 
+--------------------------------------------------------------------------------
 
-
-Passo a passo para rodar a aplicação
+# Passo a passo para rodar a aplicação
 
 1. Clone o repositório:
 
 git clone https://github.com/darcioSoares/stark
 cd stark
 
-Configuração do arquivo .env
+### Configuração do arquivo .env
 
 Renomeie o arquivo .env-exemplo para .env Que se encontra dentro da pasta APP
 
@@ -38,7 +38,7 @@ PRIVATE_KEY: Chave privada da aplicação. (Tomar cuidado com os espaços seguir
 
 ID_PROJECT: ID do projeto.
 
-2. Suba os containers com Docker: (Executar dentro da Raiz do projeto)
+## 2. Suba os containers com Docker: (Executar dentro da Raiz do projeto)
 
 Dentro da pasta do projeto, use o comando:
 
@@ -46,7 +46,7 @@ docker-compose up ou docker compose up dependendo da versão do compose
 
 Este comando irá subir os containers necessários para a aplicação.
 
-3. Rodar a aplicação sem Docker:
+## 3. Rodar a aplicação sem Docker:
 
 Caso prefira rodar sem Docker, utilize o seguinte comando:
 
@@ -60,7 +60,7 @@ Observação usei ngrok http 8080 para receber webhooks
 
 --------------------------------------------------------------------------------
 
-##Sobre as Branches
+## Sobre as Branches
 
 Branch master (síncrona):
 
@@ -81,7 +81,7 @@ Todo o restante já está configurado no arquivo.
 
 -------------------------------------------------------
 
-##Conclusão
+## Conclusão
 
 Seguindo esses passos, a aplicação estará pronta para rodar, seja em modo síncrono ou assíncrono, dependendo da branch utilizada. Caso tenha dúvidas, revise o README.md ou entre em contato.
 
