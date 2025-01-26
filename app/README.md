@@ -15,3 +15,7 @@ docker build -t go-app --build-arg MODE=prod .
 docker-compose up --build -d
 
 go mod tidy
+
+
+depois do git clone 
+baixar git checkout rabbitmq
